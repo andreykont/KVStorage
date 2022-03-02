@@ -11,7 +11,7 @@ func (b *Broker) GetStorageValue(w http.ResponseWriter, r *http.Request, key api
 	ctx := r.Context()
 	value, err := b.SomeEphemeralStorage.Get(ctx, string(key))
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	_ = json.NewEncoder(w).Encode(api.ValueTransfer{

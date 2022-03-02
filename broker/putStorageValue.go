@@ -15,11 +15,10 @@ func (b *Broker) PutStorageValue(w http.ResponseWriter, r *http.Request, key api
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	err = b.SomeEphemeralStorage.Put(ctx, key, storageValue)
+	err = b.SomeEphemeralStorage.Put(ctx, string(key), storageValue.Value)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	return
 }
