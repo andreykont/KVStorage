@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title:
+  description: Сервис http для работы хранилищем "ключ-значение"
+  version: 0.1.0
+servers:
+  - url: /api
+    description: Локальный
+  - url: http://127.0.0.1:8081/api
+    description: Локальный дев
+paths:
+  /storage/{key}:
+    put:
+      summary: Создает или переписывает значение в хранилище
+      operationId: putStorageValue
+      parameters:
+        - $ref: '#/components/parameters/PathKey'
+      requestBody:
+        description: Передача параметров для value
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValueTransfer'
+      responses:
+        '200':
+          description: Успех
+        '500':
+          description: Внешняя ошибка
+    get:
+      summary: Отдает значение из хранилища
+      operationId: getStorageValue
+      parameters:
+        - $ref: '#/components/parameters/PathKey'
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValueTransfer'
+        '404':
+          description: Значение не найдено в хранилище
+    delete:
+      summary: Удаляет значение из хранилища
+      operationId: deleteStorageValue
+      parameters:
+        - $ref: '#/components/parameters/PathKey'
+      responses:
+        '200':
+          description: Удалено успешно
+        '404':
+          description: Значение не найдено в хранилище
+components:
+  parameters:
+    PathKey:
+      name: key
+      in: path
+      description: Имя ключа
+      required: true
+      schema:
+        type: string
+  schemas:
+    ValueTransfer:
+      description: Объект для передачи value в json структуре
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
