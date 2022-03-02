@@ -25,6 +25,8 @@ paths:
       responses:
         '200':
           description: Успех
+        '400':
+          description: Ошибка запроса
         '500':
           description: Внешняя ошибка
     get:

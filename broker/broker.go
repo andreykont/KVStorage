@@ -7,7 +7,7 @@ import (
 )
 
 type Broker struct {
-	Storage KVStorage
+	SomeEphemeralStorage KVStorage
 }
 
 type KVStorage interface {
@@ -18,5 +18,5 @@ type KVStorage interface {
 
 func NewBroker() *Broker {
 	storage := kvstorage.NewKVStorage()
-	return &Broker{Storage: storage}
+	return &Broker{SomeEphemeralStorage: storage}
 }
